@@ -404,14 +404,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-04-16
+                    2021-04-17
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.2k
+                    2.5k
                 </div>
                 
 
@@ -841,7 +841,7 @@ from
 </ul>
 </li>
 </ul>
-<p>基本查询</p>
+<h3 id="基本查询">基本查询</h3>
 <pre class=" language-language-mysql"><code class="language-language-mysql">#1. 下面的语句是否可以执行成功
 select last_name , job_id , salary as sal
 from employees;
@@ -859,6 +859,140 @@ select distinct `job_id` from `employees`
 select CONCAT (`first_name`,',',`last_name`,',',IFNULL(`commission_pct`,0)) as out_put
 from `employees`
 </code></pre>
+<ul>
+<li>
+<p>查询单个字段</p>
+<ul>
+<li>
+<pre><code>select 字段名 from 表名
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>查询多个字段</p>
+<ul>
+<li>
+<pre><code>select 字段名 字段名 from 表名
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>查询所有字段</p>
+<ul>
+<li>
+<pre><code>select * from
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>查询常量</p>
+<ul>
+<li>
+<pre><code>select 常量
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>查询函数</p>
+<pre><code>select 函数名(实参列表)
+</code></pre>
+</li>
+<li>
+<p>起别名</p>
+<ul>
+<li>
+<pre><code>as  或者 空格
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>去重</p>
+<ul>
+<li>
+<pre><code>select distinct from 表名
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<ul>
+<li></li>
+</ul>
+</li>
+<li>
+<p>作用: 做加法运算</p>
+</li>
+<li>
+<p>select 数值+数值直接运算</p>
+</li>
+<li>
+<p>select 数组+字符 字符装换为数值再运算,转换不了就等于0</p>
+</li>
+<li>
+<p>select null+值 结果都为null</p>
+</li>
+<li>
+<p>concat函数</p>
+<ul>
+<li>可以拼接字符</li>
+<li>select concat (字符1,字符2,~	);</li>
+</ul>
+</li>
+<li>
+<p>ifnull</p>
+<ul>
+<li>判断某字段或表达式是否为null,如果为null就放回指定的值,不为null就返回原本的值</li>
+<li>select ifnull (字段名,0) from 表名;</li>
+</ul>
+</li>
+<li>
+<p>isnull</p>
+<ul>
+<li>判断某字段或表达式是否为null是就返回1,不是就为0</li>
+</ul>
+</li>
+</ul>
+<h3 id="条件查询">条件查询</h3>
+<ol>
+<li>语法
+<ol>
+<li>select 查询列表   from 表名  where 条件</li>
+</ol>
+</li>
+<li>筛选条件分类
+<ol>
+<li>简单条件运算符
+<ol>
+<li>&lt;  &lt;=  &gt;  &gt;=  &lt;&gt;  !=   &lt;=&gt;(安全等于)</li>
+</ol>
+</li>
+<li>逻辑运算符
+<ol>
+<li>&amp;&amp;(and)    ||(or)    !(not)</li>
+</ol>
+</li>
+<li>模糊查询
+<ol>
+<li>like: 一般和通配符一起使用,</li>
+<li>between and</li>
+<li>in</li>
+<li>is null /  is not null</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>is null 和 (&lt;=&gt;)安全等于的区别
+<ol>
+<li>is null  不能判断普通类型的数值  null值可以</li>
+<li>&lt;=&gt;     普通类型可以    null值也可以</li>
+</ol>
+</li>
+</ol>
 
                 
             </div>

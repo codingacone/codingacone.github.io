@@ -428,13 +428,14 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="博客的基本操作"><a href="#博客的基本操作" class="headerlink" title="博客的基本操作"></a>博客的基本操作</h3><p>1.在博客目录下hexo new  “文件名”</p>
-<p>2.npm install –save hexo-deployer-git          本地和github连接</p>
+                <h3 id="博客的基本操作">博客的基本操作</h3>
+<p>1.在博客目录下hexo new  “文件名”</p>
+<p>2.npm install --save hexo-deployer-git          本地和github连接</p>
 <p>3.每次修改hexo clean 清理  hexo g  解析  hexo d 部署到github</p>
 <p>4._config.yml文件里最后面增加</p>
-<p>​    type: ‘git’</p>
-<p>​    repo: 自己的仓库地址</p>
-<p>​    branch: master</p>
+<p>​	type: ‘git’</p>
+<p>​	repo: 自己的仓库地址</p>
+<p>​	branch: master</p>
 <p>5.更新主题在themes下git clone 主题的地址，然后把在_config.yml文件里吧themes 后面改成主题文件名</p>
 <table>
 <thead>
@@ -444,7 +445,8 @@
 <th>描述</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>title</td>
 <td><code>Markdown</code> 的文件标题</td>
 <td>文章标题，强烈建议填写此选项</td>
@@ -519,13 +521,16 @@
 <td>cc_by</td>
 <td>文章转载规则， 可以是 cc_by, cc_by_nd, cc_by_sa, cc_by_nc, cc_by_nc_nd, cc_by_nc_sa, cc0, noreprint 或 pay 中的一个</td>
 </tr>
-</tbody></table>
-<h3 id="最简示例"><a href="#最简示例" class="headerlink" title="最简示例"></a>最简示例</h3><pre><code>---
+</tbody>
+</table>
+<h3 id="最简示例">最简示例</h3>
+<pre><code>---
 title: typora-vue-theme主题介绍
 date: 2018-09-07 09:25:00
 ---
 </code></pre>
-<h3 id="最全示例"><a href="#最全示例" class="headerlink" title="最全示例"></a>最全示例</h3><pre><code>---
+<h3 id="最全示例">最全示例</h3>
+<pre><code>---
 title: typora-vue-theme主题介绍
 date: 2018-09-07 09:25:00
 author: 赵奇
@@ -543,19 +548,20 @@ tags:
   - Markdown
 ---
 </code></pre>
-<h3 id="配置个性化域名"><a href="#配置个性化域名" class="headerlink" title="配置个性化域名"></a>配置个性化域名</h3><p>一顿操作下来，打开我们的博客还是：<a target="_blank" rel="noopener" href="http://www.xxx.github.io/">www.xxx.github.io</a>，是不是很没有牌面？我们可以考虑购买一个专属域名，以后打开博客就是这样：<a target="_blank" rel="noopener" href="http://www.xxx.com/">www.xxx.com</a> 。</p>
+<h3 id="配置个性化域名">配置个性化域名</h3>
+<p>一顿操作下来，打开我们的博客还是：<a target="_blank" rel="noopener" href="http://www.xxx.github.io/">www.xxx.github.io</a>，是不是很没有牌面？我们可以考虑购买一个专属域名，以后打开博客就是这样：<a target="_blank" rel="noopener" href="http://www.xxx.com/">www.xxx.com</a> 。</p>
 <p><a target="_blank" rel="noopener" href="https://www.aliyun.com/">阿里云</a>和<a target="_blank" rel="noopener" href="https://cloud.tencent.com/">腾讯云</a>都可以，我的是腾讯云，购买域名后首先需要添加解析：</p>
 <p><img src="https://muyiio-1300292673.cos.ap-chongqing.myqcloud.com/%E5%8D%9A%E5%AE%A2/_posts/1/24.png" alt="img"></p>
 <p><img src="https://muyiio-1300292673.cos.ap-chongqing.myqcloud.com/%E5%8D%9A%E5%AE%A2/_posts/1/25.png" alt="img"></p>
-<p><strong>方法一：</strong>点击添加记录，需要添加两个记录，两个记录类型都是 CNAME ，第一个主机记录为 @ ，第二个主机记录为 www，记录值都是填你自己的博客地址（比如我的是：muyiio.github.io），保存之后域名解析就完成了！</p>
+<p>**方法一：**点击添加记录，需要添加两个记录，两个记录类型都是 CNAME ，第一个主机记录为 @ ，第二个主机记录为 www，记录值都是填你自己的博客地址（比如我的是：<a target="_blank" rel="noopener" href="http://muyiio.github.io">muyiio.github.io</a>），保存之后域名解析就完成了！</p>
 <p><img src="https://muyiio-1300292673.cos.ap-chongqing.myqcloud.com/%E5%8D%9A%E5%AE%A2/_posts/1/27.png" alt="img"></p>
-<p><strong>方法二：</strong>两个记录类型为 A ，第一个主机记录为 @ ，第二个主机记录为 www，记录值都为博客的 IP 地址，IP 地址可以 cmd 中输入 ping 你的博客地址 获得（比如我的：ping muyiio.github.io），保存之后域名解析就完成了！</p>
+<p>**方法二：**两个记录类型为 A ，第一个主机记录为 @ ，第二个主机记录为 www，记录值都为博客的 IP 地址，IP 地址可以 cmd 中输入 ping 你的博客地址 获得（比如我的：ping <a target="_blank" rel="noopener" href="http://muyiio.github.io">muyiio.github.io</a>），保存之后域名解析就完成了！</p>
 <p><img src="https://muyiio-1300292673.cos.ap-chongqing.myqcloud.com/%E5%8D%9A%E5%AE%A2/_posts/1/26.png" alt="img"></p>
 <p><strong>不管在哪个平台购买域名，操作都大同小异，这里说明两点</strong>：</p>
 <p>然后打开你的github博客项目，点击settings，拉到下面Custom domain处，填上你自己的域名，保存就可以了</p>
 <p>现在我们的项目根目录应该会出现一个名为CNAME的文件了。如果没有的话，打开你本地博客/source目录，我的是C:\Blog\Hexo\source，新建CNAME文件，（注意不要加.txt，没有任何后缀名！）。然后在里面写上你的域名，保存。最后运行hexo g、hexo d上传到github。</p>
 <p><img src="https://muyiio-1300292673.cos.ap-chongqing.myqcloud.com/%E5%8D%9A%E5%AE%A2/_posts/1/29.png" alt="img"></p>
-<p>现在就可以通过我们的个性化域名：<a target="_blank" rel="noopener" href="http://www.xxx.com、xxx.com/">www.xxx.com、xxx.com</a>访问自己的博客了。</p>
+<p>现在就可以通过我们的个性化域名：<a target="_blank" rel="noopener" href="http://www.xxx.xn--comxxx-kr3e.com/">www.xxx.com、xxx.com</a>访问自己的博客了。</p>
 
                 
             </div>
@@ -932,13 +938,13 @@ tags:
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/01/02/%E7%A8%80%E7%96%8F%E6%95%B0%E7%BB%84/">
+                <a href="/2021/01/03/Java%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="稀疏数组">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Java数据结构与算法">
                         
-                        <span class="card-title">稀疏数组</span>
+                        <span class="card-title">Java数据结构与算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -949,7 +955,7 @@ tags:
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-02
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-03
                         </span>
                         <span class="publish-author">
                             
@@ -966,8 +972,8 @@ tags:
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%A8%80%E7%96%8F%E6%95%B0%E7%BB%84/">
-                        <span class="chip bg-color">稀疏数组</span>
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                        <span class="chip bg-color">数据结构</span>
                     </a>
                     
                 </div>
@@ -978,27 +984,27 @@ tags:
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/2020/01/31/%E4%BB%80%E4%B9%88%E6%98%AFHTML/">
+                <a href="/2020/12/30/github%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="HTML基本命令">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="github配置命令">
                         
-                        <span class="card-title">HTML基本命令</span>
+                        <span class="card-title">github配置命令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            搭建操作
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-31
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-30
                             </span>
                         <span class="publish-author">
                             
@@ -1008,11 +1014,12 @@ tags:
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/HTML/">
-                        <span class="chip bg-color">HTML</span>
+                    <a href="/tags/%E9%9A%8F%E7%AC%94/">
+                        <span class="chip bg-color">随笔</span>
                     </a>
                     
                 </div>

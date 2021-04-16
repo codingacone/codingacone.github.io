@@ -428,11 +428,16 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="MySQL概述"><a href="#MySQL概述" class="headerlink" title="MySQL概述"></a>MySQL概述</h2><p>mysql是<strong>关系型数据库</strong>由于其<strong>体积小</strong>、<strong>速度快</strong>、总体拥有<strong>成本低</strong>，尤其是开放源码这一特点，一般中小型网站的开发都选择 MySQL 作为网站数据库。</p>
-<h2 id="MySQL的安装"><a href="#MySQL的安装" class="headerlink" title="MySQL的安装"></a>MySQL的安装</h2><p>mysql5.7 64位下载地址:</p>
+                <h2 id="MySQL概述">MySQL概述</h2>
+<p>mysql是<strong>关系型数据库</strong>由于其<strong>体积小</strong>、<strong>速度快</strong>、总体拥有<strong>成本低</strong>，尤其是开放源码这一特点，一般中小型网站的开发都选择 MySQL 作为网站数据库。</p>
+<h2 id="MySQL的安装">MySQL的安装</h2>
+<p>mysql5.7 64位下载地址:</p>
 <p><a target="_blank" rel="noopener" href="https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.19-winx64.zip">https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.19-winx64.zip</a></p>
-<h2 id="mysql的基本命令"><a href="#mysql的基本命令" class="headerlink" title="mysql的基本命令"></a>mysql的基本命令</h2><h3 id="如何登入数据库"><a href="#如何登入数据库" class="headerlink" title="如何登入数据库?"></a>如何登入数据库?</h3><p>mysql -uroot -p123456</p>
-<h3 id="如何访问数据库服务器中的所有数据库"><a href="#如何访问数据库服务器中的所有数据库" class="headerlink" title="如何访问数据库服务器中的所有数据库"></a>如何访问数据库服务器中的所有数据库</h3><pre class=" language-mysql"><code class="language-mysql">mysql> show databases;
+<h2 id="mysql的基本命令">mysql的基本命令</h2>
+<h3 id="如何登入数据库">如何登入数据库?</h3>
+<p>mysql -uroot -p123456</p>
+<h3 id="如何访问数据库服务器中的所有数据库">如何访问数据库服务器中的所有数据库</h3>
+<pre class=" language-language-mysql"><code class="language-language-mysql">mysql> show databases;
 +--------------------+
 | Database           |
 +--------------------+
@@ -446,25 +451,30 @@
 +--------------------+
 7 rows in set (0.02 sec)
 </code></pre>
-<h3 id="如何选中数据库"><a href="#如何选中数据库" class="headerlink" title="如何选中数据库?"></a>如何选中数据库?</h3><p>$$</p>
+<h3 id="如何选中数据库">如何选中数据库?</h3>
 <p>$$</p>
-<pre class=" language-mysql"><code class="language-mysql">mysql> use test
+<p>$$</p>
+<pre class=" language-language-mysql"><code class="language-language-mysql">mysql> use test
 Database changed
 </code></pre>
-<h3 id="如何退出数据库"><a href="#如何退出数据库" class="headerlink" title="如何退出数据库?"></a>如何退出数据库?</h3><pre class=" language-mysql"><code class="language-mysql">mysql> exit
+<h3 id="如何退出数据库">如何退出数据库?</h3>
+<pre class=" language-language-mysql"><code class="language-language-mysql">mysql> exit
 Bye
 </code></pre>
-<h3 id="如何创建数据库"><a href="#如何创建数据库" class="headerlink" title="如何创建数据库"></a>如何创建数据库</h3><pre class=" language-mysql"><code class="language-mysql">mysql> create database look;
+<h3 id="如何创建数据库">如何创建数据库</h3>
+<pre class=" language-language-mysql"><code class="language-language-mysql">mysql> create database look;
 Query OK, 1 row affected (0.01 sec)
 </code></pre>
-<h3 id="查看某个数据库中的数据表"><a href="#查看某个数据库中的数据表" class="headerlink" title="查看某个数据库中的数据表"></a>查看某个数据库中的数据表</h3><pre class=" language-mysql"><code class="language-mysql">mysql> use look;
+<h3 id="查看某个数据库中的数据表">查看某个数据库中的数据表</h3>
+<pre class=" language-language-mysql"><code class="language-language-mysql">mysql> use look;
 Database changed
 mysql> show tables
     -> ;
 Empty set (0.00 sec)
 </code></pre>
-<h3 id="如何创建一个数据表"><a href="#如何创建一个数据表" class="headerlink" title="如何创建一个数据表"></a>如何创建一个数据表</h3><pre class=" language-mysql"><code class="language-mysql">create table pet(
-    name varchar(20),
+<h3 id="如何创建一个数据表">如何创建一个数据表</h3>
+<pre class=" language-language-mysql"><code class="language-language-mysql">create table pet(
+	name varchar(20),
     owner varchar(20),
     species varchar(20),
     sex char(1),
@@ -493,7 +503,8 @@ mysql> describe pet;
 +---------+-------------+------+-----+---------+-------+
 6 rows in set (0.01 sec)
 </code></pre>
-<h3 id="如何在一个表中添加数据"><a href="#如何在一个表中添加数据" class="headerlink" title="如何在一个表中添加数据"></a>如何在一个表中添加数据</h3><pre class=" language-mysql"><code class="language-mysql">insert into pet
+<h3 id="如何在一个表中添加数据">如何在一个表中添加数据</h3>
+<pre class=" language-language-mysql"><code class="language-language-mysql">insert into pet
 values ('mys','dian','h','f','2002-3-4',null);
 
 -- 在查询一次
@@ -530,12 +541,17 @@ mysql> select * from pet;
 +------+--------+---------+------+------------+-------+
 2 rows in set (0.00 sec)
 
+
 </code></pre>
-<h3 id="数据库的数据类型"><a href="#数据库的数据类型" class="headerlink" title="数据库的数据类型"></a>数据库的数据类型</h3><h4 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h4><p><img src="https://i.loli.net/2021/04/15/lQAUnXWDpRzqBmc.png" alt="image-20210415182240703"></p>
-<h1 id="MySQL-数据类型"><a href="#MySQL-数据类型" class="headerlink" title="MySQL 数据类型"></a>MySQL 数据类型</h1><p>MySQL中定义数据字段的类型对你数据库的优化是非常重要的。</p>
+<h3 id="数据库的数据类型">数据库的数据类型</h3>
+<h4 id="数值类型">数值类型</h4>
+<p><img src="https://i.loli.net/2021/04/15/lQAUnXWDpRzqBmc.png" alt="image-20210415182240703"></p>
+<h1>MySQL 数据类型</h1>
+<p>MySQL中定义数据字段的类型对你数据库的优化是非常重要的。</p>
 <p>MySQL支持多种类型，大致可以分为三类：数值、日期/时间和字符串(字符)类型。</p>
 <hr>
-<h2 id="数值类型-1"><a href="#数值类型-1" class="headerlink" title="数值类型"></a>数值类型</h2><p>MySQL支持所有标准SQL数值数据类型。</p>
+<h2 id="数值类型-2">数值类型</h2>
+<p>MySQL支持所有标准SQL数值数据类型。</p>
 <p>这些类型包括严格数值数据类型(INTEGER、SMALLINT、DECIMAL和NUMERIC)，以及近似数值数据类型(FLOAT、REAL和DOUBLE PRECISION)。</p>
 <p>关键字INT是INTEGER的同义词，关键字DEC是DECIMAL的同义词。</p>
 <p>BIT数据类型保存位字段值，并且支持MyISAM、MEMORY、InnoDB和BDB表。</p>
@@ -543,123 +559,130 @@ mysql> select * from pet;
 <table>
 <thead>
 <tr>
-<th align="left">类型</th>
-<th align="left">大小</th>
-<th align="left">范围（有符号）</th>
-<th align="left">范围（无符号）</th>
-<th align="left">用途</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">大小</th>
+<th style="text-align:left">范围（有符号）</th>
+<th style="text-align:left">范围（无符号）</th>
+<th style="text-align:left">用途</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">TINYINT</td>
-<td align="left">1 byte</td>
-<td align="left">(-128，127)</td>
-<td align="left">(0，255)</td>
-<td align="left">小整数值</td>
+<tbody>
+<tr>
+<td style="text-align:left">TINYINT</td>
+<td style="text-align:left">1 byte</td>
+<td style="text-align:left">(-128，127)</td>
+<td style="text-align:left">(0，255)</td>
+<td style="text-align:left">小整数值</td>
 </tr>
 <tr>
-<td align="left">SMALLINT</td>
-<td align="left">2 bytes</td>
-<td align="left">(-32 768，32 767)</td>
-<td align="left">(0，65 535)</td>
-<td align="left">大整数值</td>
+<td style="text-align:left">SMALLINT</td>
+<td style="text-align:left">2 bytes</td>
+<td style="text-align:left">(-32 768，32 767)</td>
+<td style="text-align:left">(0，65 535)</td>
+<td style="text-align:left">大整数值</td>
 </tr>
 <tr>
-<td align="left">MEDIUMINT</td>
-<td align="left">3 bytes</td>
-<td align="left">(-8 388 608，8 388 607)</td>
-<td align="left">(0，16 777 215)</td>
-<td align="left">大整数值</td>
+<td style="text-align:left">MEDIUMINT</td>
+<td style="text-align:left">3 bytes</td>
+<td style="text-align:left">(-8 388 608，8 388 607)</td>
+<td style="text-align:left">(0，16 777 215)</td>
+<td style="text-align:left">大整数值</td>
 </tr>
 <tr>
-<td align="left">INT或INTEGER</td>
-<td align="left">4 bytes</td>
-<td align="left">(-2 147 483 648，2 147 483 647)</td>
-<td align="left">(0，4 294 967 295)</td>
-<td align="left">大整数值</td>
+<td style="text-align:left">INT或INTEGER</td>
+<td style="text-align:left">4 bytes</td>
+<td style="text-align:left">(-2 147 483 648，2 147 483 647)</td>
+<td style="text-align:left">(0，4 294 967 295)</td>
+<td style="text-align:left">大整数值</td>
 </tr>
 <tr>
-<td align="left">BIGINT</td>
-<td align="left">8 bytes</td>
-<td align="left">(-9,223,372,036,854,775,808，9 223 372 036 854 775 807)</td>
-<td align="left">(0，18 446 744 073 709 551 615)</td>
-<td align="left">极大整数值</td>
+<td style="text-align:left">BIGINT</td>
+<td style="text-align:left">8 bytes</td>
+<td style="text-align:left">(-9,223,372,036,854,775,808，9 223 372 036 854 775 807)</td>
+<td style="text-align:left">(0，18 446 744 073 709 551 615)</td>
+<td style="text-align:left">极大整数值</td>
 </tr>
 <tr>
-<td align="left">FLOAT</td>
-<td align="left">4 bytes</td>
-<td align="left">(-3.402 823 466 E+38，-1.175 494 351 E-38)，0，(1.175 494 351 E-38，3.402 823 466 351 E+38)</td>
-<td align="left">0，(1.175 494 351 E-38，3.402 823 466 E+38)</td>
-<td align="left">单精度 浮点数值</td>
+<td style="text-align:left">FLOAT</td>
+<td style="text-align:left">4 bytes</td>
+<td style="text-align:left">(-3.402 823 466 E+38，-1.175 494 351 E-38)，0，(1.175 494 351 E-38，3.402 823 466 351 E+38)</td>
+<td style="text-align:left">0，(1.175 494 351 E-38，3.402 823 466 E+38)</td>
+<td style="text-align:left">单精度 浮点数值</td>
 </tr>
 <tr>
-<td align="left">DOUBLE</td>
-<td align="left">8 bytes</td>
-<td align="left">(-1.797 693 134 862 315 7 E+308，-2.225 073 858 507 201 4 E-308)，0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
-<td align="left">0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
-<td align="left">双精度 浮点数值</td>
+<td style="text-align:left">DOUBLE</td>
+<td style="text-align:left">8 bytes</td>
+<td style="text-align:left">(-1.797 693 134 862 315 7 E+308，-2.225 073 858 507 201 4 E-308)，0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td style="text-align:left">0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td style="text-align:left">双精度 浮点数值</td>
 </tr>
 <tr>
-<td align="left">DECIMAL</td>
-<td align="left">对DECIMAL(M,D) ，如果M&gt;D，为M+2否则为D+2</td>
-<td align="left">依赖于M和D的值</td>
-<td align="left">依赖于M和D的值</td>
-<td align="left">小数值</td>
+<td style="text-align:left">DECIMAL</td>
+<td style="text-align:left">对DECIMAL(M,D) ，如果M&gt;D，为M+2否则为D+2</td>
+<td style="text-align:left">依赖于M和D的值</td>
+<td style="text-align:left">依赖于M和D的值</td>
+<td style="text-align:left">小数值</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <hr>
-<h2 id="日期和时间类型"><a href="#日期和时间类型" class="headerlink" title="日期和时间类型"></a>日期和时间类型</h2><p>表示时间值的日期和时间类型为DATETIME、DATE、TIMESTAMP、TIME和YEAR。</p>
-<p>每个时间类型有一个有效值范围和一个”零”值，当指定不合法的MySQL不能表示的值时使用”零”值。</p>
+<h2 id="日期和时间类型">日期和时间类型</h2>
+<p>表示时间值的日期和时间类型为DATETIME、DATE、TIMESTAMP、TIME和YEAR。</p>
+<p>每个时间类型有一个有效值范围和一个&quot;零&quot;值，当指定不合法的MySQL不能表示的值时使用&quot;零&quot;值。</p>
 <p>TIMESTAMP类型有专有的自动更新特性，将在后面描述。</p>
 <table>
 <thead>
 <tr>
-<th align="left">类型</th>
-<th align="left">大小 ( bytes)</th>
-<th align="left">范围</th>
-<th align="left">格式</th>
-<th align="left">用途</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">大小 ( bytes)</th>
+<th style="text-align:left">范围</th>
+<th style="text-align:left">格式</th>
+<th style="text-align:left">用途</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">DATE</td>
-<td align="left">3</td>
-<td align="left">1000-01-01/9999-12-31</td>
-<td align="left">YYYY-MM-DD</td>
-<td align="left">日期值</td>
+<tbody>
+<tr>
+<td style="text-align:left">DATE</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">1000-01-01/9999-12-31</td>
+<td style="text-align:left">YYYY-MM-DD</td>
+<td style="text-align:left">日期值</td>
 </tr>
 <tr>
-<td align="left">TIME</td>
-<td align="left">3</td>
-<td align="left">‘-838:59:59’/‘838:59:59’</td>
-<td align="left">HH:MM:SS</td>
-<td align="left">时间值或持续时间</td>
+<td style="text-align:left">TIME</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">‘-838:59:59’/‘838:59:59’</td>
+<td style="text-align:left">HH:MM:SS</td>
+<td style="text-align:left">时间值或持续时间</td>
 </tr>
 <tr>
-<td align="left">YEAR</td>
-<td align="left">1</td>
-<td align="left">1901/2155</td>
-<td align="left">YYYY</td>
-<td align="left">年份值</td>
+<td style="text-align:left">YEAR</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1901/2155</td>
+<td style="text-align:left">YYYY</td>
+<td style="text-align:left">年份值</td>
 </tr>
 <tr>
-<td align="left">DATETIME</td>
-<td align="left">8</td>
-<td align="left">1000-01-01 00:00:00/9999-12-31 23:59:59</td>
-<td align="left">YYYY-MM-DD HH:MM:SS</td>
-<td align="left">混合日期和时间值</td>
+<td style="text-align:left">DATETIME</td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">1000-01-01 00:00:00/9999-12-31 23:59:59</td>
+<td style="text-align:left">YYYY-MM-DD HH:MM:SS</td>
+<td style="text-align:left">混合日期和时间值</td>
 </tr>
 <tr>
-<td align="left">TIMESTAMP</td>
-<td align="left">4</td>
-<td align="left">1970-01-01 00:00:00/2038结束时间是第 <strong>2147483647</strong> 秒，北京时间 <strong>2038-1-19 11:14:07</strong>，格林尼治时间 2038年1月19日 凌晨 03:14:07</td>
-<td align="left">YYYYMMDD HHMMSS</td>
-<td align="left">混合日期和时间值，时间戳</td>
+<td style="text-align:left">TIMESTAMP</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">1970-01-01 00:00:00/2038结束时间是第 <strong>2147483647</strong> 秒，北京时间 <strong>2038-1-19 11:14:07</strong>，格林尼治时间 2038年1月19日 凌晨 03:14:07</td>
+<td style="text-align:left">YYYYMMDD HHMMSS</td>
+<td style="text-align:left">混合日期和时间值，时间戳</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <hr>
-<h2 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h2><p><img src="https://i.loli.net/2021/04/15/sMfkpJ8AT6yjFVx.png" alt="image-20210415182359305"></p>
-<h2 id="mysql的增删改查操作"><a href="#mysql的增删改查操作" class="headerlink" title="mysql的增删改查操作"></a>mysql的增删改查操作</h2><pre class=" language-mysql"><code class="language-mysql">use look;
+<h2 id="字符串类型">字符串类型</h2>
+<p><img src="https://i.loli.net/2021/04/15/sMfkpJ8AT6yjFVx.png" alt="image-20210415182359305"></p>
+<h2 id="mysql的增删改查操作">mysql的增删改查操作</h2>
+<pre class=" language-language-mysql"><code class="language-language-mysql">use look;
 -- 插入数据
 insert into pet values('小心','周星驰1','狗','公','2002-5-12',null);
 insert into pet values('小y','周星驰2','狗','公','2002-8-12',null);
@@ -717,12 +740,15 @@ mysql> select * from pet;
 
 --   insert 增 update 改 delete 删 select 查
 </code></pre>
-<h2 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h2><h3 id="主键约束"><a href="#主键约束" class="headerlink" title="主键约束"></a>主键约束</h3><p> 主键，又称主码，是表中一列或多列的组合。主键约束(PRIMARY KEY CONSTRAINT)要求主键列的</p>
+<h2 id="约束">约束</h2>
+<h3 id="主键约束">主键约束</h3>
+<p>主键，又称主码，是表中一列或多列的组合。主键约束(PRIMARY KEY CONSTRAINT)要求主键列的</p>
 <p>数据唯一，并且 <strong>不允许为空</strong>。主键能够<strong>唯一</strong>表示表中的一条记录，可以结合外键来定义不同数据表之间的关系，并且可以加快数据查询的速度。主键和记录之间的关系如同身份证和人之间的关系，他们之间一一对应。主键主要分为两种： <strong>单字段主键</strong>和 <strong>多字段联合主键</strong>。</p>
 <ul>
-<li><p>格式[字段名] [数据类型] primary key</p>
-<pre class=" language-mysql"><code class="language-mysql">create table u1(
-    id int primary key,
+<li>
+<p>格式[字段名] [数据类型] primary key</p>
+<pre class=" language-language-mysql"><code class="language-language-mysql">create table u1(
+	id int primary key,
     name varchar(20)
 
 )engine=innodb default charset=utf8
@@ -738,11 +764,12 @@ ERROR 1048 (23000): Column 'id' cannot be null
 </code></pre>
 <p><strong>多字段联合主键</strong></p>
 </li>
-<li><p>格式primary key(字段名,字段名~);</p>
+<li>
+<p>格式primary key(字段名,字段名~);</p>
 </li>
 </ul>
-<pre class=" language-mysql"><code class="language-mysql">create table u2(
-    `id` int,
+<pre class=" language-language-mysql"><code class="language-language-mysql">create table u2(
+	`id` int,
     `name` varchar(20),
     `password` varchar(20),
     primary key(id,name)
@@ -757,9 +784,10 @@ mysql> insert into u2 values(1,'zha','213');
 ERROR 1062 (23000): Duplicate entry '1-zha' for key 'PRIMARY'
 </code></pre>
 <ul>
-<li><p>自增约束</p>
-<pre class=" language-mysql"><code class="language-mysql">create table u3(
-    `id` int primary key auto_increment,
+<li>
+<p>自增约束</p>
+<pre class=" language-language-mysql"><code class="language-language-mysql">create table u3(
+	`id` int primary key auto_increment,
     `name` varchar(20)
 )engine = innodb default charset=utf8;
 
@@ -768,8 +796,9 @@ insert into u3 values(1,'zhan');
 insert into u3(name) values('zhan');
 </code></pre>
 </li>
-<li><p>建表后的增加和删除主键</p>
-<pre class=" language-mysql"><code class="language-mysql">-- 增加在字段约束
+<li>
+<p>建表后的增加和删除主键</p>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 增加在字段约束
 alter table [表名] add primary key(字段名)
 -- 删除字段约束
 alter table [表名] drop primary key;
@@ -777,23 +806,28 @@ alter table [表名] drop primary key;
 alter table [表名] modify [字段名] [数据类型] primary key;
 </code></pre>
 </li>
-<li><p>唯一约束</p>
+<li>
+<p>唯一约束</p>
 </li>
 </ul>
-<h2 id="DQL语言"><a href="#DQL语言" class="headerlink" title="DQL语言"></a>DQL语言</h2><ul>
+<h2 id="DQL语言">DQL语言</h2>
+<ul>
 <li>去重关键字distinct</li>
 </ul>
-<pre class=" language-mysql"><code class="language-mysql"># 查询所有部门 去重
+<pre class=" language-language-mysql"><code class="language-language-mysql"># 查询所有部门 去重
 select distinct `department_id` from `employees`;
 </code></pre>
 <ul>
-<li><p>+号的作用</p>
+<li>
+<p>+号的作用</p>
 <p>在mysql里面+好不能拼接只能相加,字符和数值相加,会把字符装换为数值</p>
 <p>继续相加,如果失败就等于0</p>
 </li>
-<li><p>起别名</p>
+<li>
+<p>起别名</p>
 <ul>
-<li><pre class=" language-mysql"><code class="language-mysql">select 
+<li>
+<pre class=" language-language-mysql"><code class="language-language-mysql">select 
   last_name as 姓名 
 from
   `employees` ;
@@ -808,7 +842,7 @@ from
 </li>
 </ul>
 <p>基本查询</p>
-<pre class=" language-mysql"><code class="language-mysql">#1. 下面的语句是否可以执行成功
+<pre class=" language-language-mysql"><code class="language-language-mysql">#1. 下面的语句是否可以执行成功
 select last_name , job_id , salary as sal
 from employees;
 #2. 下面的语句是否可以执行成功 

@@ -404,14 +404,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-04-17
+                    2021-04-18
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.5k
+                    3.4k
                 </div>
                 
 
@@ -993,6 +993,281 @@ from `employees`
 </ol>
 </li>
 </ol>
+<h3 id="排序查询">排序查询</h3>
+<ul>
+<li>语法
+<ul>
+<li>select 查询列表</li>
+<li>from 表名</li>
+<li>where 筛选条件</li>
+<li>order by 排序列表[asc ,desc]</li>
+</ul>
+</li>
+<li>特点
+<ul>
+<li>asc : 升序, 不写默认是升序</li>
+<li>desc: 降序</li>
+<li>排序列表 支持 单个字段,多个字段,函数,表达式,别名</li>
+<li>order by 的位置一般在查询语句的最后(除limit)</li>
+</ul>
+</li>
+</ul>
+<h3 id="常见见函数">常见见函数</h3>
+<ul>
+<li>
+<p>语法  select 函数名(实参列表)</p>
+</li>
+<li>
+<p>单行函数</p>
+<ul>
+<li>
+<p>字符函数</p>
+<ul>
+<li>concat :连接</li>
+<li>substr :截取子串</li>
+<li>upper :变大写</li>
+<li>lower :变小写</li>
+<li>replace : 替换</li>
+<li>length :获奖字节长度</li>
+<li>trim :去前后空格</li>
+<li>lpad : 左填充</li>
+<li>rpad :右填充</li>
+<li>instr:获取子串第一次出现的索引</li>
+</ul>
+</li>
+<li>
+<p>数学函数</p>
+<ul>
+<li>ceil:向上取整</li>
+<li>round : 四舍五入</li>
+<li>mod  : 取模 <strong>编程中取余操作</strong><br>
+<strong>a%b = a-a/b*b;</strong></li>
+<li>floor : 向下取整</li>
+<li>truncate :截断</li>
+<li>rand :随机数 0-1之间的小数</li>
+</ul>
+</li>
+<li>
+<p>时间函数</p>
+</li>
+<li>
+<p>now : 返回当前日期+时间</p>
+</li>
+<li>
+<p>year : 返回年</p>
+</li>
+<li>
+<p>month :返回月</p>
+</li>
+<li>
+<p>day :返回日</p>
+</li>
+<li>
+<p>date_format:将日期装换为字符</p>
+</li>
+<li>
+<p>curdate : 返回当前日期</p>
+</li>
+<li>
+<p>str_to_date: 将字符装换成日期</p>
+</li>
+<li>
+<p>curtime : 返回当前时间</p>
+</li>
+<li>
+<p>hour : 小时</p>
+</li>
+<li>
+<p>minute :分钟</p>
+</li>
+<li>
+<p>second :秒</p>
+</li>
+<li>
+<p>datediff:返回两个日期相差的天数</p>
+</li>
+<li>
+<p>monthname: 以英文形式返回月</p>
+</li>
+<li>
+<p>其他函数</p>
+<ul>
+<li>version : 返回版本号</li>
+<li>database: 当前打开的数据库</li>
+<li>user 当前用户</li>
+<li>password(‘字符’) : 返回字符的密码形式</li>
+<li>md5(‘字符’):返回字符的MD5加密形式</li>
+</ul>
+</li>
+<li>
+<p>流程控制函数</p>
+<ul>
+<li>if (条件表达式,表达式1,表达式2):如果表达式成立返回表达式1,否则返回表达式2</li>
+<li>case情况1
+<ul>
+<li>case 变量或表达式或字段</li>
+<li>when 常量1 then 值1</li>
+<li>when 常量2 then 值2</li>
+<li>…</li>
+<li>else 值n</li>
+<li>end</li>
+</ul>
+</li>
+<li>case 情况2
+<ul>
+<li>case</li>
+<li>when 条件1 then 值1</li>
+<li>when 条件2 then 值2</li>
+<li>…</li>
+<li>else 值n</li>
+<li>end</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>分组函数</p>
+<ul>
+<li>max 最大</li>
+<li>min 最小</li>
+<li>sum 和</li>
+<li>avg 平均值</li>
+<li>count 计数</li>
+</ul>
+</li>
+<li>
+<p>特点</p>
+<ul>
+<li>
+<p>语法</p>
+<ul>
+<li>select max(字段) from 表名</li>
+</ul>
+</li>
+<li>
+<p>支持的类型</p>
+<ul>
+<li>sum和avg一般用于处理数值型</li>
+<li>max,min,count可以处理任何的数据类型</li>
+</ul>
+</li>
+<li>
+<p>以上函数都忽略null 值</p>
+</li>
+<li>
+<p>都可以搭配distinct使用,实现去重的统计</p>
+</li>
+<li>
+<p>count 函数</p>
+<ul>
+<li>
+<p>count (字段) :统计该字段非空值得个数</p>
+</li>
+<li>
+<p>count(*) :统计结果集的行数</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="分组查询">分组查询</h3>
+<ol>
+<li>
+<p>语法</p>
+<ol>
+<li>
+<pre><code>select 分组函数,分组后的字段
+from 表
+where 筛选条件
+having 分组后的筛选
+order by 排序列表
+</code></pre>
+</li>
+<li>
+<p>特点</p>
+<ol>
+<li>
+<pre><code>			 使用关键字   筛选表		位置
+分组前的筛选 	  where		原表			group的前面
+分组后的筛选    having	分组后的结果	  group的后面
+</code></pre>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="连接查询">连接查询</h3>
+<pre><code>select 字段1,字段2
+from 表1 ,表2...'
+笛卡尔积:当查询多个表时没有连接条件,导致多个表说有行实现完全连接
+</code></pre>
+<ol>
+<li>
+<p>分类</p>
+<ol>
+<li>sql92: 等值,非等值,自连接</li>
+<li>sql99:  内连接:等值,非等值,自连接
+<ol>
+<li>外连接: 左外,右外,全外(mysql不支持)</li>
+<li>交叉连接</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>sql92语法</p>
+</li>
+<li>
+<p>等值连接</p>
+<ol>
+<li>
+<pre><code>select 查询列表
+form 表名1 别名,表名2 别名...
+where 表1.key = 表2.key
+and 筛选条件
+group by 分组字段
+having 分组后的筛选
+order by 排序字段
+</code></pre>
+</li>
+<li>
+<p>非等值连接</p>
+<ol>
+<li>
+<pre><code>select 查询列表
+form 表名1 别名,表名2 别名...
+where 非等值连接的条件
+and 筛选条件
+group by 分组字段
+having 分组后的筛选
+order by 排序字段
+</code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p>自连接</p>
+<ol>
+<li>
+<pre><code>select 查询列表
+form 表 别名,表 别名...
+where 等值连接的条件
+and 筛选条件
+group by 分组字段
+having 分组后的筛选
+order by 排序字段
+</code></pre>
+</li>
+<li></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 
                 
             </div>
@@ -1420,15 +1695,15 @@ from `employees`
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="糖果屋">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">糖果屋</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            我也是个普通人
+                            
                         
                     </div>
                     <div class="publish-info">

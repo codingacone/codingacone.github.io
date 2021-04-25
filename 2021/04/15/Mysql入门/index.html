@@ -404,14 +404,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-04-18
+                    2021-04-25
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.4k
+                    4.6k
                 </div>
                 
 
@@ -480,7 +480,7 @@ Empty set (0.00 sec)
     sex char(1),
     birth date,
     death date
-);
+)engine=innodb default charset=utf8
 -- 查看表是否创建
 mysql> show tables;
 +----------------+
@@ -742,8 +742,63 @@ mysql> select * from pet;
 </code></pre>
 <h2 id="约束">约束</h2>
 <h3 id="主键约束">主键约束</h3>
-<p>主键，又称主码，是表中一列或多列的组合。主键约束(PRIMARY KEY CONSTRAINT)要求主键列的</p>
-<p>数据唯一，并且 <strong>不允许为空</strong>。主键能够<strong>唯一</strong>表示表中的一条记录，可以结合外键来定义不同数据表之间的关系，并且可以加快数据查询的速度。主键和记录之间的关系如同身份证和人之间的关系，他们之间一一对应。主键主要分为两种： <strong>单字段主键</strong>和 <strong>多字段联合主键</strong>。</p>
+<h4 id="1-约束的概念和分类">1.约束的概念和分类</h4>
+<ul>
+<li>约束的概念
+<ul>
+<li>对表中的数据进行限定，保证数据的正确性、有效性、完整性！</li>
+</ul>
+</li>
+<li>约束的分类</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>约束</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PRIMARY KEY</td>
+<td>主键约束</td>
+</tr>
+<tr>
+<td>PRIMARY KEY AUTO_INCREMENT</td>
+<td>主键、自动增长</td>
+</tr>
+<tr>
+<td>UNIQUE</td>
+<td>唯一约束</td>
+</tr>
+<tr>
+<td>NOT NULL</td>
+<td>非空约束</td>
+</tr>
+<tr>
+<td>FOREIGN KEY</td>
+<td>外键约束</td>
+</tr>
+<tr>
+<td>FOREIGN KEY ON UPDATE CASCADE</td>
+<td>外键级联更新</td>
+</tr>
+<tr>
+<td>FOREIGN KEY ON DELETE CASCADE</td>
+<td>外键级联删除</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-主键约束">2.主键约束</h4>
+<ul>
+<li>主键约束特点
+<ul>
+<li>主键约束包含：非空和唯一两个功能</li>
+<li>一张表只能有一个列作为主键</li>
+<li>主键一般用于表中数据的唯一标识</li>
+</ul>
+</li>
+</ul>
 <ul>
 <li>
 <p>格式[字段名] [数据类型] primary key</p>
@@ -805,11 +860,210 @@ alter table [表名] drop primary key;
 -- 使用modify 修改字段,增加约束
 alter table [表名] modify [字段名] [数据类型] primary key;
 </code></pre>
-</li>
-<li>
-<p>唯一约束</p>
+<h4 id="3-唯一约束">3.唯一约束</h4>
+<ul>
+<li>建表时添加唯一约束</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 创建学生表(编号、姓名、年龄)  编号设为主键自增，年龄设为唯一
+create table student(
+	id int primary key auto_increment,
+	name varchar(20) not null,
+	age int unique
+)engine=innodb default charset=utf8
+
+-- 查询学生表的详细信息
+desc student;
+-- 添加数据
+insert into student values (null,'张三',23);
+insert into student values (null,'李四',23);
+
+-- 删除唯一约束
+alter table student drop index age;
+-- 建表后单独添加唯一约束
+alter table student modify age int unique;
+</code></pre>
+<ul>
+<li>删除唯一约束</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+ALTER TABLE 表名 DROP INDEX 列名;
+</code></pre>
+<ul>
+<li>建表后单独添加唯一约束</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+ALTER TABLE 表名 MODIFY 列名 数据类型 UNIQUE;
+</code></pre>
 </li>
 </ul>
+<h4 id="4-非空约束">4.非空约束</h4>
+<ul>
+<li>建表时添加非空约束</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+CREATE TABLE 表名(
+	列名 数据类型 NOT NULL,
+    列名 数据类型,
+    ...
+);
+
+-- 创建student4表
+CREATE TABLE student4(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	NAME VARCHAR(20) NOT NULL    -- 给name添加非空约束
+);
+
+-- 添加数据
+INSERT INTO student4 VALUES (NULL,'张三'),(NULL,'李四');
+-- 添加null值，会报错
+INSERT INTO student4 VALUES (NULL,NULL);
+</code></pre>
+<ul>
+<li>删除非空约束</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+ALTER TABLE 表名 MODIFY 列名 数据类型;
+
+-- 删除非空约束
+ALTER TABLE student4 MODIFY NAME VARCHAR(20);
+</code></pre>
+<ul>
+<li>建表后单独添加非空约束</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+ALTER TABLE 表名 MODIFY 列名 数据类型 NOT NULL;
+
+-- 添加非空约束
+ALTER TABLE student4 MODIFY NAME VARCHAR(20) NOT NULL;
+</code></pre>
+<h3 id="外键约束">外键约束</h3>
+<ul>
+<li>
+<p>外键约束概念</p>
+<ul>
+<li>让表和表之间产生关系，从而保证数据的准确性！</li>
+</ul>
+</li>
+<li>
+<p>建表时添加外键约束</p>
+<ul>
+<li>为什么要有外键约束</li>
+</ul>
+</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 创建db2数据库
+create database db2;
+
+-- 使用db2数据库
+use db2;
+
+/*
+	外键约束
+	标准语法：
+		CONSTRAINT 外键名 FOREIGN KEY (本表外键列名) REFERENCES 主表名(主表主键列名)
+*/
+-- 建表时添加外键约束
+-- 创建user用户表
+create table USER(
+	id int primary key auto_increment,
+	name varchar (20) not null
+
+
+)engine = innodb default charset=utf8;
+-- 添加用户数据
+insert into user values(null,'zs'),(null,'lis');
+
+-- 创建orderlist订单表
+create table orderlist(
+	id int primary key auto_increment,-- id
+	number varchar(20) not null, -- 订单编号
+	uid int , -- 外键列
+	constraint ou_f foreign key (uid) references USER(id)
+)engine = innodb default charset=utf8;
+
+-- 添加订单数据
+insert into orderlist values (null,'hm001',1),(null,'hm002',1),
+(null,'hm003',2),(null,'hm004',2);`user``orderlist`
+-- 添加一个订单，但是没有真实用户。添加失败
+insert into orderlist values (null,'ho',3);
+
+-- 删除zs用户。删除失败
+delete from user where name='zs';
+
+/*
+	删除外键约束
+	标准语法：
+		ALTER TABLE 表名 DROP FOREIGN KEY 外键名;
+*/
+-- 删除外键约束
+alter table orderlist drop foreign key ou_f;
+
+/*
+	建表后单独添加外键约束
+	标准语法：
+		ALTER TABLE 表名 ADD CONSTRAINT 外键名 FOREIGN KEY (本表外键列名) REFERENCES 主表名(主键列名);
+*/
+-- 添加外键约束
+alter table orderlist add constraint ou_k foreign key (uid) references USER(id);
+
+</code></pre>
+<ul>
+<li>
+<p>外键约束格式</p>
+<pre class=" language-language-mysql"><code class="language-language-mysql">CONSTRAINT 外键名 FOREIGN KEY (本表外键列名) REFERENCES 主表名(主表主键列名)
+</code></pre>
+</li>
+<li>
+<p>删除外键约束</p>
+</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+ALTER TABLE 表名 DROP FOREIGN KEY 外键名;
+
+-- 删除外键
+ALTER TABLE orderlist DROP FOREIGN KEY ou_fk1;
+</code></pre>
+<ul>
+<li>建表后添加外键约束</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+ALTER TABLE 表名 ADD CONSTRAINT 外键名 FOREIGN KEY (本表外键列名) REFERENCES 主表名(主键列名);
+
+-- 添加外键约束
+ALTER TABLE orderlist ADD CONSTRAINT ou_fk1 FOREIGN KEY (uid) REFERENCES USER(id);
+</code></pre>
+<h3 id="外键的级联操作">外键的级联操作</h3>
+<ul>
+<li>什么是级联更新和级联删除
+<ul>
+<li>当我想把user用户表中的某个用户删掉，我希望该用户所有的订单也随之被删除</li>
+<li>当我想把user用户表中的某个用户id修改，我希望订单表中该用户所属的订单用户编号也随之修改</li>
+</ul>
+</li>
+<li>添加级联更新和级联删除</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 添加外键约束，同时添加级联更新  标准语法
+ALTER TABLE 表名 ADD CONSTRAINT 外键名 FOREIGN KEY (本表外键列名) REFERENCES 主表名(主键列名) ON UPDATE CASCADE;
+
+-- 添加外键约束，同时添加级联删除  标准语法
+ALTER TABLE 表名 ADD CONSTRAINT 外键名 FOREIGN KEY (本表外键列名) REFERENCES 主表名(主键列名) ON DELETE CASCADE;
+
+-- 添加外键约束，同时添加级联更新和级联删除  标准语法
+ALTER TABLE 表名 ADD CONSTRAINT 外键名 FOREIGN KEY (本表外键列名) REFERENCES 主表名(主键列名) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+-- 删除外键约束
+ALTER TABLE orderlist DROP FOREIGN KEY ou_fk1;
+
+-- 添加外键约束，同时添加级联更新和级联删除
+ALTER TABLE orderlist ADD CONSTRAINT ou_fk1 FOREIGN KEY (uid) REFERENCES USER(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+-- 将王五用户的id修改为5    订单表中的uid也随之被修改
+UPDATE USER SET id=5 WHERE id=3;
+
+-- 将王五用户删除     订单表中该用户所有订单也随之删除
+DELETE FROM USER WHERE id=5;
+</code></pre>
 <h2 id="DQL语言">DQL语言</h2>
 <ul>
 <li>去重关键字distinct</li>
@@ -1200,6 +1454,26 @@ order by 排序列表
 </ol>
 </li>
 </ol>
+<h3 id="分页查询">分页查询</h3>
+<ol>
+<li>
+<p>语法</p>
+<ol>
+<li>
+<pre><code>select 列名 from 表名
+where 条件
+group by 分组
+having 分组后的筛选
+order by 排序列表
+limit 当前页数,每页显示的页数
+
+公式:当前页数=(当前页数-1)*每页显示的页数
+</code></pre>
+</li>
+<li></li>
+</ol>
+</li>
+</ol>
 <h3 id="连接查询">连接查询</h3>
 <pre><code>select 字段1,字段2
 from 表1 ,表2...'
@@ -1262,12 +1536,12 @@ having 分组后的筛选
 order by 排序字段
 </code></pre>
 </li>
-<li></li>
 </ol>
 </li>
 </ol>
 </li>
 </ol>
+<h2 id="多表查询">多表查询</h2>
 
                 
             </div>

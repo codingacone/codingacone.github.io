@@ -404,14 +404,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-04-25
+                    2021-04-26
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.6k
+                    9.8k
                 </div>
                 
 
@@ -740,7 +740,7 @@ mysql> select * from pet;
 
 --   insert 增 update 改 delete 删 select 查
 </code></pre>
-<h2 id="约束">约束</h2>
+<h1>约束</h1>
 <h3 id="主键约束">主键约束</h3>
 <h4 id="1-约束的概念和分类">1.约束的概念和分类</h4>
 <ul>
@@ -1064,7 +1064,7 @@ UPDATE USER SET id=5 WHERE id=3;
 -- 将王五用户删除     订单表中该用户所有订单也随之删除
 DELETE FROM USER WHERE id=5;
 </code></pre>
-<h2 id="DQL语言">DQL语言</h2>
+<h1>DQL语言</h1>
 <ul>
 <li>去重关键字distinct</li>
 </ul>
@@ -1541,7 +1541,969 @@ order by 排序字段
 </ol>
 </li>
 </ol>
-<h2 id="多表查询">多表查询</h2>
+<h1>多表查询</h1>
+<ul>
+<li>数据</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 创建db6数据库
+CREATE DATABASE db6;
+-- 使用db6数据库
+USE db6;
+
+-- 创建user表
+CREATE TABLE USER(
+	id INT PRIMARY KEY AUTO_INCREMENT,	-- 用户id
+	NAME VARCHAR(20),			        -- 用户姓名
+	age INT                             -- 用户年龄
+);
+-- 添加数据
+INSERT INTO USER VALUES (1,'张三',23);
+INSERT INTO USER VALUES (2,'李四',24);
+INSERT INTO USER VALUES (3,'王五',25);
+INSERT INTO USER VALUES (4,'赵六',26);
+
+
+-- 订单表
+CREATE TABLE orderlist(
+	id INT PRIMARY KEY AUTO_INCREMENT,	-- 订单id
+	number VARCHAR(30),					-- 订单编号
+	uid INT,    -- 外键字段
+	CONSTRAINT ou_fk1 FOREIGN KEY (uid) REFERENCES USER(id)
+);
+-- 添加数据
+INSERT INTO orderlist VALUES (1,'hm001',1);
+INSERT INTO orderlist VALUES (2,'hm002',1);
+INSERT INTO orderlist VALUES (3,'hm003',2);
+INSERT INTO orderlist VALUES (4,'hm004',2);
+INSERT INTO orderlist VALUES (5,'hm005',3);
+INSERT INTO orderlist VALUES (6,'hm006',3);
+INSERT INTO orderlist VALUES (7,'hm007',NULL);
+
+
+-- 商品分类表
+CREATE TABLE category(
+	id INT PRIMARY KEY AUTO_INCREMENT,  -- 商品分类id
+	NAME VARCHAR(10)                    -- 商品分类名称
+);
+-- 添加数据
+INSERT INTO category VALUES (1,'手机数码');
+INSERT INTO category VALUES (2,'电脑办公');
+INSERT INTO category VALUES (3,'烟酒茶糖');
+INSERT INTO category VALUES (4,'鞋靴箱包');
+
+
+-- 商品表
+CREATE TABLE product(
+	id INT PRIMARY KEY AUTO_INCREMENT,   -- 商品id
+	NAME VARCHAR(30),                    -- 商品名称
+	cid INT, -- 外键字段
+	CONSTRAINT cp_fk1 FOREIGN KEY (cid) REFERENCES category(id)
+);
+-- 添加数据
+INSERT INTO product VALUES (1,'华为手机',1);
+INSERT INTO product VALUES (2,'小米手机',1);
+INSERT INTO product VALUES (3,'联想电脑',2);
+INSERT INTO product VALUES (4,'苹果电脑',2);
+INSERT INTO product VALUES (5,'中华香烟',3);
+INSERT INTO product VALUES (6,'玉溪香烟',3);
+INSERT INTO product VALUES (7,'计生用品',NULL);
+
+
+-- 中间表
+CREATE TABLE us_pro(
+	upid INT PRIMARY KEY AUTO_INCREMENT,  -- 中间表id
+	uid INT, -- 外键字段。需要和用户表的主键产生关联
+	pid INT, -- 外键字段。需要和商品表的主键产生关联
+	CONSTRAINT up_fk1 FOREIGN KEY (uid) REFERENCES USER(id),
+	CONSTRAINT up_fk2 FOREIGN KEY (pid) REFERENCES product(id)
+);
+-- 添加数据
+INSERT INTO us_pro VALUES (NULL,1,1);
+INSERT INTO us_pro VALUES (NULL,1,2);
+INSERT INTO us_pro VALUES (NULL,1,3);
+INSERT INTO us_pro VALUES (NULL,1,4);
+INSERT INTO us_pro VALUES (NULL,1,5);
+INSERT INTO us_pro VALUES (NULL,1,6);
+INSERT INTO us_pro VALUES (NULL,1,7);
+INSERT INTO us_pro VALUES (NULL,2,1);
+INSERT INTO us_pro VALUES (NULL,2,2);
+INSERT INTO us_pro VALUES (NULL,2,3);
+INSERT INTO us_pro VALUES (NULL,2,4);
+INSERT INTO us_pro VALUES (NULL,2,5);
+INSERT INTO us_pro VALUES (NULL,2,6);
+INSERT INTO us_pro VALUES (NULL,2,7);
+INSERT INTO us_pro VALUES (NULL,3,1);
+INSERT INTO us_pro VALUES (NULL,3,2);
+INSERT INTO us_pro VALUES (NULL,3,3);
+INSERT INTO us_pro VALUES (NULL,3,4);
+INSERT INTO us_pro VALUES (NULL,3,5);
+INSERT INTO us_pro VALUES (NULL,3,6);
+INSERT INTO us_pro VALUES (NULL,3,7);
+INSERT INTO us_pro VALUES (NULL,4,1);
+INSERT INTO us_pro VALUES (NULL,4,2);
+INSERT INTO us_pro VALUES (NULL,4,3);
+INSERT INTO us_pro VALUES (NULL,4,4);
+INSERT INTO us_pro VALUES (NULL,4,5);
+INSERT INTO us_pro VALUES (NULL,4,6);
+INSERT INTO us_pro VALUES (NULL,4,7);
+</code></pre>
+<ul>
+<li>结构</li>
+</ul>
+<p><img src="https://i.loli.net/2021/04/25/y1EqmGgwQMLDXBR.png" alt="image-20210425202546396"></p>
+<h4 id="1-多表查询-内连接查询">1.多表查询-内连接查询</h4>
+<ul>
+<li>查询原理
+<ul>
+<li>内连接查询的是两张表有交集的部分数据(有主外键关联的数据)</li>
+</ul>
+</li>
+<li>显式内连接</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">/*
+	显示内连接
+	标准语法：
+		SELECT 列名 FROM 表名1 [INNER] JOIN 表名2 ON 关联条件;
+*/
+-- 查询用户信息和对应的订单信息
+select * from `user` inner join `orderlist` on orderlist.uid = user.id;
+
+-- 查询用户信息和对应的订单信息，起别名
+select * from `user` u inner join `orderlist` o on u.id = o.uid;
+
+-- 查询用户姓名，年龄。和订单编号
+select 
+	u.name,-- 用户姓名
+	u.age,-- 用户年龄
+	o.number-- 订单编号
+
+from 
+	user u -- 用户表
+inner join
+	orderlist o -- 订单表
+on	
+	o.uid = u.id;
+	
+	
+/*
+	隐式内连接
+	标准语法：
+		SELECT 列名 FROM 表名1,表名2 WHERE 关联条件;
+*/
+-- 查询用户姓名，年龄。和订单编号
+select
+	u.name,		-- 用户姓名
+	u.age,		-- 用户年龄
+	o.number	-- 订单编号
+from
+	user u,		-- 用户表
+	orderlist o     -- 订单表
+where
+	o.uid=u.id;
+
+</code></pre>
+<h4 id="2-多表查询-外连接查询">2.多表查询-外连接查询</h4>
+<ul>
+<li>
+<p>左外连接</p>
+<ul>
+<li>查询原理
+<ul>
+<li>查询左表的全部数据，和左右两张表有交集部分的数据</li>
+</ul>
+</li>
+<li>基本演示</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+SELECT 列名 FROM 表名1 LEFT [OUTER] JOIN 表名2 ON 条件;
+
+-- 查询所有用户信息，以及用户对应的订单信息
+SELECT
+	u.`name`,	-- 姓名
+	u.`age`,	-- 年龄
+	o.`number`	-- 订单编号
+FROM
+	USER u          -- 用户表
+LEFT OUTER JOIN
+	orderlist o     -- 订单表
+ON
+	u.`id`=o.`uid`;
+</code></pre>
+<p>右外连接</p>
+<ul>
+<li>查询原理
+<ul>
+<li>查询右表的全部数据，和左右两张表有交集部分的数据</li>
+</ul>
+</li>
+<li>基本演示</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 基本语法
+SELECT 列名 FROM 表名1 RIGHT [OUTER] JOIN 表名2 ON 条件;
+
+-- 查询所有订单信息，以及订单所属的用户信息
+SELECT
+	u.`name`,	-- 姓名
+	u.`age`,	-- 年龄
+	o.`number`	-- 订单编号
+FROM
+	USER u          -- 用户表
+RIGHT OUTER JOIN
+	orderlist o     -- 订单表
+ON
+	u.`id`=o.`uid`;
+</code></pre>
+</li>
+</ul>
+<h4 id="3-多表查询-子查询">3.多表查询-子查询</h4>
+<ul>
+<li>
+<p>子查询介绍</p>
+<ul>
+<li>查询语句中嵌套了查询语句。我们就将嵌套查询称为子查询！</li>
+</ul>
+</li>
+<li>
+<p>子查询-结果是单行单列的</p>
+<ul>
+<li>可以作为条件，使用运算符进行判断！</li>
+<li>基本演示</li>
+</ul>
+</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+SELECT 列名 FROM 表名 WHERE 列名=(SELECT 聚合函数(列名) FROM 表名 [WHERE 条件]);
+
+-- 查询年龄最高的用户姓名
+SELECT MAX(age) FROM USER;              -- 查询出最高年龄
+SELECT NAME,age FROM USER WHERE age=26; -- 根据查询出来的最高年龄，查询姓名和年龄
+SELECT NAME,age FROM USER WHERE age = (SELECT MAX(age) FROM USER);
+</code></pre>
+<p>子查询-结果是多行单列的</p>
+<ul>
+<li>可以作为条件，使用运算符in或not in进行判断！</li>
+<li>基本演示</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+SELECT 列名 FROM 表名 WHERE 列名 [NOT] IN (SELECT 列名 FROM 表名 [WHERE 条件]); 
+
+-- 查询张三和李四的订单信息
+SELECT id FROM USER WHERE NAME='张三' OR NAME='李四';   -- 查询张三和李四用户的id
+SELECT number,uid FROM orderlist WHERE uid=1 OR uid=2; -- 根据id查询订单
+SELECT number,uid FROM orderlist WHERE uid IN (SELECT id FROM USER WHERE NAME='张三' OR NAME='李四');
+</code></pre>
+<p>子查询-结果是多行多列的</p>
+<ul>
+<li>可以作为一张虚拟表参与查询！</li>
+<li>基本演示</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+SELECT 列名 FROM 表名 [别名],(SELECT 列名 FROM 表名 [WHERE 条件]) [别名] [WHERE 条件];
+
+-- 查询订单表中id大于4的订单信息和所属用户信息
+SELECT * FROM USER u,(SELECT * FROM orderlist WHERE id>4) o WHERE u.id=o.uid;
+</code></pre>
+<h4 id="4-多表查询练习">4.多表查询练习</h4>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 1.查询用户的编号、姓名、年龄。订单编号
+select u.id,u.name,u.age,o.number
+	from `user` u,`orderlist`o
+where u.id = o.uid;
+-- 2.查询所有的用户。用户的编号、姓名、年龄。订单编号
+
+select u.id,u.name,u.age,o.number
+from `user` u left join `orderlist` o
+on u.id = o.uid;
+
+-- 3.查询所有的订单。用户的编号、姓名、年龄。订单编号
+select u.id,u.name,u.age,o.number
+from `user` u right join `orderlist` o
+on u.id = o.uid;
+-- 4.查询用户年龄大于23岁的信息。显示用户的编号、姓名、年龄。订单编号
+
+select  u.id,u.name,u.age,o.number
+	from `user` u,`orderlist` o
+where u.id = o.uid and  u.age > 23;
+-- 5.查询张三和李四用户的信息。显示用户的编号、姓名、年龄。订单编号
+-- 5.查询张三和李四用户的信息。显示用户的编号、姓名、年龄。订单编号
+/*
+分析
+	用户的编号、姓名、年龄 user表   订单编号 orderlist表
+	条件：user.id=orderlist.uid AND user.name IN ('张三','李四')
+*/
+select u.id,u.name,u.age,o.number
+from `user` u , `orderlist` o
+where u.id = o.uid and u.name in ('张三','李四')
+
+-- 6.查询商品分类的编号、分类名称。分类下的商品名称
+select c.id,c.name,p.name
+	from `category` c ,`product` p
+where c.id = p.cid;
+-- 7.查询所有的商品分类。商品分类的编号、分类名称。分类下的商品名称
+/*
+分析
+	商品分类的编号、分类名称 category表    商品名称 product表
+	条件：category.id=product.cid
+	查询所有的商品分类，左外连接
+*/
+select c.id,c.name,p.name
+from `category` c  left join `product` p
+on c.id = p.cid;
+-- 8.查询所有的商品信息。商品分类的编号、分类名称。分类下的商品名称
+select c.id,c.name,p.name
+from `category` c  right join `product` p
+on c.id = p.cid;
+-- 9.查询所有的用户和该用户能查看的所有的商品。显示用户的编号、姓名、年龄。商品名称
+/*
+分析
+	用户的编号、姓名、年龄 user表   商品名称 product表    中间表 us_pro
+	条件：us_pro.uid=user.id AND us_pro.pid=product.id
+*/
+select u.id,u.name,u.age,p.name
+from `user` u,`product` p,`us_pro` o
+where u.id = o.uid and p.id = o.pid;
+-- 10.查询张三和李四这两个用户可以看到的商品。显示用户的编号、姓名、年龄。商品名称
+
+select u.id,u.name,u.age,p.name
+from `user` u,`product` p,`us_pro` o
+where u.id = o.uid and p.id = o.pid and u.name in ('张三','李四')
+
+</code></pre>
+<h1>视图</h1>
+<h4 id="1-视图的概念">1.视图的概念</h4>
+<ul>
+<li>视图是一种虚拟存在的数据表</li>
+<li>这个虚拟的表并不在数据库中实际存在</li>
+<li>作用是将一些比较复杂的查询语句的结果，封装到一个虚拟表中。后期再有相同复杂查询时，直接查询这张虚拟表即可</li>
+<li>说白了，视图就是将一条SELECT查询语句的结果封装到了一个虚拟表中，所以我们在创建视图的时候，工作重心就要放在这条SELECT查询语句上</li>
+</ul>
+<h4 id="2-视图的好处">2.视图的好处</h4>
+<ul>
+<li>简单
+<ul>
+<li>对于使用视图的用户不需要关心表的结构、关联条件和筛选条件。因为这张虚拟表中保存的就是已经过滤好条件的结果集</li>
+</ul>
+</li>
+<li>安全
+<ul>
+<li>视图可以设置权限 , 致使访问视图的用户只能访问他们被允许查询的结果集</li>
+</ul>
+</li>
+<li>数据独立
+<ul>
+<li>一旦视图的结构确定了，可以屏蔽表结构变化对用户的影响，源表增加列对视图没有影响；源表修改列名，则可以通过修改视图来解决，不会造成对访问者的影</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-视图数据准备">3.视图数据准备</h4>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 创建db7数据库
+CREATE DATABASE db7;
+
+-- 使用db7数据库
+USE db7;
+
+-- 创建country表
+CREATE TABLE country(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	country_name VARCHAR(30)
+);
+-- 添加数据
+INSERT INTO country VALUES (NULL,'中国'),(NULL,'美国'),(NULL,'俄罗斯');
+
+-- 创建city表
+CREATE TABLE city(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	city_name VARCHAR(30),
+	cid INT, -- 外键列。关联country表的主键列id
+	CONSTRAINT cc_fk1 FOREIGN KEY (cid) REFERENCES country(id)
+);
+-- 添加数据
+INSERT INTO city VALUES (NULL,'北京',1),(NULL,'上海',1),(NULL,'纽约',2),(NULL,'莫斯科',3);
+</code></pre>
+<h4 id="4-视图的创建">4.视图的创建</h4>
+<ul>
+<li>创建视图语法</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+CREATE VIEW 视图名称 [(列名列表)] AS 查询语句;
+</code></pre>
+<ul>
+<li>普通多表查询，查询城市和所属国家</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 普通多表查询，查询城市和所属国家
+SELECT
+	t1.*,
+	t2.country_name
+FROM
+	city t1,
+	country t2
+WHERE
+	t1.cid = t2.id;
+	
+-- 经常需要查询这样的数据，就可以创建一个视图
+</code></pre>
+<ul>
+<li>创建视图基本演示</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 创建一个视图。将查询出来的结果保存到这张虚拟表中
+CREATE
+VIEW
+	city_country
+AS
+	SELECT t1.*,t2.country_name FROM city t1,country t2 WHERE t1.cid=t2.id;
+</code></pre>
+<ul>
+<li>创建视图并指定列名基本演示</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 创建一个视图，指定列名。将查询出来的结果保存到这张虚拟表中
+CREATE
+VIEW
+	city_country2 (city_id,city_name,cid,country_name) 
+AS
+	SELECT t1.*,t2.country_name FROM city t1,country t2 WHERE t1.cid=t2.id;
+
+</code></pre>
+<h4 id="5-视图的查询">5.视图的查询</h4>
+<ul>
+<li>查询视图语法</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+SELECT * FROM 视图名称;
+</code></pre>
+<ul>
+<li>查询视图创建语法</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+SHOW CREATE VIEW 视图名称;
+</code></pre>
+<h4 id="6-视图的修改">6.视图的修改</h4>
+<ul>
+<li>修改视图表中的数据</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+UPDATE 视图名称 SET 列名=值 WHERE 条件;
+
+-- 修改视图表中的城市名称北京为北京市
+UPDATE city_country SET city_name='北京市' WHERE city_name='北京';
+
+-- 查询视图
+SELECT * FROM city_country;
+
+-- 查询city表,北京也修改为了北京市
+SELECT * FROM city;
+
+-- 注意：视图表数据修改，会自动修改源表中的数据
+</code></pre>
+<ul>
+<li>修改视图表结构</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+ALTER VIEW 视图名称 [(列名列表)] AS 查询语句;
+
+-- 查询视图2
+SELECT * FROM city_country2;
+
+-- 修改视图2的列名city_id为id
+ALTER
+VIEW
+	city_country2 (id,city_name,cid,country_name)
+AS
+	SELECT t1.*,t2.country_name FROM city t1,country t2 WHERE t1.cid=t2.id;
+</code></pre>
+<h4 id="7-视图的删除">7.视图的删除</h4>
+<ul>
+<li>删除视图</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+DROP VIEW [IF EXISTS] 视图名称;
+
+-- 删除视图
+DROP VIEW city_country;
+
+-- 删除视图2，如果存在则删除
+DROP VIEW IF EXISTS city_country2;
+</code></pre>
+<h4 id="8-视图的总结">8.视图的总结</h4>
+<ul>
+<li>视图是一种虚拟存在的数据表</li>
+<li>这个虚拟的表并不在数据库中实际存在</li>
+<li>说白了，视图就是将一条SELECT查询语句的结果封装到了一个虚拟表中，所以我们在创建视图的时候，工作重心就要放在这条SELECT查询语句上</li>
+<li>视图的好处
+<ul>
+<li>简单</li>
+<li>安全</li>
+<li>数据独立</li>
+</ul>
+</li>
+</ul>
+<h1>MySQL存储过程和函数</h1>
+<h4 id="1-存储过程和函数的概念">1.存储过程和函数的概念</h4>
+<ul>
+<li>存储过程和函数是  事先经过编译并存储在数据库中的一段 SQL 语句的集合</li>
+</ul>
+<h4 id="2-存储过程和函数的好处">2.存储过程和函数的好处</h4>
+<ul>
+<li>存储过程和函数可以重复使用，减轻开发人员的工作量。类似于java中方法可以多次调用</li>
+<li>减少网络流量，存储过程和函数位于服务器上，调用的时候只需要传递名称和参数即可</li>
+<li>减少数据在数据库和应用服务器之间的传输，可以提高数据处理的效率</li>
+<li>将一些业务逻辑在数据库层面来实现，可以减少代码层面的业务处理</li>
+</ul>
+<h4 id="3-存储过程和函数的区别">3.存储过程和函数的区别</h4>
+<ul>
+<li>函数必须有返回值</li>
+<li>存储过程没有返回值</li>
+</ul>
+<h4 id="4-创建存储过程">4.创建存储过程</h4>
+<ul>
+<li>小知识</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">/*
+	该关键字用来声明sql语句的分隔符，告诉MySQL该段命令已经结束！
+	sql语句默认的分隔符是分号，但是有的时候我们需要一条功能sql语句中包含分号，但是并不作为结束标识。
+	这个时候就可以使用DELIMITER来指定分隔符了！
+*/
+-- 标准语法
+DELIMITER 分隔符
+</code></pre>
+<ul>
+<li>数据准备</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 创建db8数据库
+CREATE DATABASE db8;
+
+-- 使用db8数据库
+USE db8;
+
+-- 创建学生表
+CREATE TABLE student(
+	id INT PRIMARY KEY AUTO_INCREMENT,	-- 学生id
+	NAME VARCHAR(20),					-- 学生姓名
+	age INT,							-- 学生年龄
+	gender VARCHAR(5),					-- 学生性别
+	score INT                           -- 学生成绩
+);
+-- 添加数据
+INSERT INTO student VALUES (NULL,'张三',23,'男',95),(NULL,'李四',24,'男',98),
+(NULL,'王五',25,'女',100),(NULL,'赵六',26,'女',90);
+
+-- 按照性别进行分组，查询每组学生的总成绩。按照总成绩的升序排序
+SELECT gender,SUM(score) getSum FROM student GROUP BY gender ORDER BY getSum ASC;
+</code></pre>
+<ul>
+<li>创建存储过程语法</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 修改分隔符为$
+DELIMITER $
+
+-- 标准语法
+CREATE PROCEDURE 存储过程名称(参数...)
+BEGIN
+	sql语句;
+END$
+
+-- 修改分隔符为分号
+DELIMITER ;
+</code></pre>
+<ul>
+<li>创建存储过程</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 修改分隔符为$
+DELIMITER $
+
+-- 创建存储过程，封装分组查询学生总成绩的sql语句
+CREATE PROCEDURE stu_group()
+BEGIN
+	SELECT gender,SUM(score) getSum FROM student GROUP BY gender ORDER BY getSum ASC;
+END$
+
+-- 修改分隔符为分号
+DELIMITER ;
+</code></pre>
+<h4 id="5-调用存储过程">5.调用存储过程</h4>
+<ul>
+<li>调用存储过程语法</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+CALL 存储过程名称(实际参数);
+
+-- 调用stu_group存储过程
+CALL stu_group();
+</code></pre>
+<h4 id="6-查看存储过程">6.查看存储过程</h4>
+<ul>
+<li>查看存储过程语法</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 查询数据库中所有的存储过程 标准语法
+SELECT * FROM mysql.proc WHERE db='数据库名称';
+</code></pre>
+<h4 id="7-删除存储过程">7.删除存储过程</h4>
+<ul>
+<li>删除存储过程语法</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+DROP PROCEDURE [IF EXISTS] 存储过程名称;
+
+-- 删除stu_group存储过程
+DROP PROCEDURE stu_group;
+</code></pre>
+<h4 id="8-存储过程语法">8.存储过程语法</h4>
+<h5 id="8-1存储过程语法介绍">8.1存储过程语法介绍</h5>
+<ul>
+<li>存储过程是可以进行编程的。意味着可以使用变量、表达式、条件控制语句、循环语句等，来完成比较复杂的功能！</li>
+</ul>
+<h5 id="8-2变量的使用">8.2变量的使用</h5>
+<ul>
+<li>定义变量</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+DECLARE 变量名 数据类型 [DEFAULT 默认值];
+-- 注意： DECLARE定义的是局部变量，只能用在BEGIN END范围之内
+
+-- 定义一个int类型变量、并赋默认值为10
+DELIMITER $
+
+CREATE PROCEDURE pro_test1()
+BEGIN
+	DECLARE num INT DEFAULT 10;   -- 定义变量
+	SELECT num;                   -- 查询变量
+END$
+
+DELIMITER ;
+
+-- 调用pro_test1存储过程
+CALL pro_test1();
+</code></pre>
+<ul>
+<li>变量的赋值1</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+SET 变量名 = 变量值;
+
+-- 定义字符串类型变量，并赋值
+DELIMITER $
+
+CREATE PROCEDURE pro_test2()
+BEGIN
+	DECLARE NAME VARCHAR(10);   -- 定义变量
+	SET NAME = '存储过程';       -- 为变量赋值
+	SELECT NAME;                -- 查询变量
+END$
+
+DELIMITER ;
+
+-- 调用pro_test2存储过程
+CALL pro_test2();
+</code></pre>
+<ul>
+<li>变量的赋值2</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+SELECT 列名 INTO 变量名 FROM 表名 [WHERE 条件];
+
+-- 定义两个int变量，用于存储男女同学的总分数
+DELIMITER $
+
+CREATE PROCEDURE pro_test3()
+BEGIN
+	DECLARE men,women INT;  -- 定义变量
+	SELECT SUM(score) INTO men FROM student WHERE gender='男';    -- 计算男同学总分数赋值给men
+	SELECT SUM(score) INTO women FROM student WHERE gender='女';  -- 计算女同学总分数赋值给women
+	SELECT men,women;           -- 查询变量
+END$
+
+DELIMITER ;
+
+-- 调用pro_test3存储过程
+CALL pro_test3();
+</code></pre>
+<h5 id="8-3if语句的使用">8.3if语句的使用</h5>
+<ul>
+<li>标准语法</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+IF 判断条件1 THEN 执行的sql语句1;
+[ELSEIF 判断条件2 THEN 执行的sql语句2;]
+...
+[ELSE 执行的sql语句n;]
+END IF;
+</code></pre>
+<ul>
+<li>案例演示</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">/*
+	定义一个int变量，用于存储班级总成绩
+	定义一个varchar变量，用于存储分数描述
+	根据总成绩判断：
+		380分及以上    学习优秀
+		320 ~ 380     学习不错
+		320以下       学习一般
+*/
+DELIMITER $
+
+CREATE PROCEDURE pro_test4()
+BEGIN
+	-- 定义总分数变量
+	DECLARE total INT;
+	-- 定义分数描述变量
+	DECLARE description VARCHAR(10);
+	-- 为总分数变量赋值
+	SELECT SUM(score) INTO total FROM student;
+	-- 判断总分数
+	IF total >= 380 THEN 
+		SET description = '学习优秀';
+	ELSEIF total >= 320 AND total < 380 THEN 
+		SET description = '学习不错';
+	ELSE 
+		SET description = '学习一般';
+	END IF;
+	
+	-- 查询总成绩和描述信息
+	SELECT total,description;
+END$
+
+DELIMITER ;
+
+-- 调用pro_test4存储过程
+CALL pro_test4();
+</code></pre>
+<h5 id="8-4参数的传递">8.4参数的传递</h5>
+<ul>
+<li>参数传递的语法</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">DELIMITER $
+
+-- 标准语法
+CREATE PROCEDURE 存储过程名称([IN|OUT|INOUT] 参数名 数据类型)
+BEGIN
+	执行的sql语句;
+END$
+/*
+	IN:代表输入参数，需要由调用者传递实际数据。默认的
+	OUT:代表输出参数，该参数可以作为返回值
+	INOUT:代表既可以作为输入参数，也可以作为输出参数
+*/
+DELIMITER ;
+</code></pre>
+<p>输入参数</p>
+<ul>
+<li>标准语法</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">DELIMITER $
+
+-- 标准语法
+CREATE PROCEDURE 存储过程名称(IN 参数名 数据类型)
+BEGIN
+	执行的sql语句;
+END$
+
+DELIMITER ;
+</code></pre>
+<ul>
+<li>案例演示</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">/*
+	输入总成绩变量，代表学生总成绩
+	定义一个varchar变量，用于存储分数描述
+	根据总成绩判断：
+		380分及以上  学习优秀
+		320 ~ 380    学习不错
+		320以下      学习一般
+*/
+DELIMITER $
+
+CREATE PROCEDURE pro_test5(IN total INT)
+BEGIN
+	-- 定义分数描述变量
+	DECLARE description VARCHAR(10);
+	-- 判断总分数
+	IF total >= 380 THEN 
+		SET description = '学习优秀';
+	ELSEIF total >= 320 AND total < 380 THEN 
+		SET description = '学习不错';
+	ELSE 
+		SET description = '学习一般';
+	END IF;
+	
+	-- 查询总成绩和描述信息
+	SELECT total,description;
+END$
+
+DELIMITER ;
+
+-- 调用pro_test5存储过程
+CALL pro_test5(390);
+CALL pro_test5((SELECT SUM(score) FROM student));
+</code></pre>
+<p>输出参数</p>
+<ul>
+<li>标准语法</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">DELIMITER $
+
+-- 标准语法
+CREATE PROCEDURE 存储过程名称(OUT 参数名 数据类型)
+BEGIN
+	执行的sql语句;
+END$
+
+DELIMITER ;
+</code></pre>
+<ul>
+<li>案例演示</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">/*
+	输入总成绩变量，代表学生总成绩
+	输出分数描述变量，代表学生总成绩的描述
+	根据总成绩判断：
+		380分及以上  学习优秀
+		320 ~ 380    学习不错
+		320以下      学习一般
+*/
+DELIMITER $
+
+CREATE PROCEDURE pro_test6(IN total INT,OUT description VARCHAR(10))
+BEGIN
+	-- 判断总分数
+	IF total >= 380 THEN 
+		SET description = '学习优秀';
+	ELSEIF total >= 320 AND total < 380 THEN 
+		SET description = '学习不错';
+	ELSE 
+		SET description = '学习一般';
+	END IF;
+END$
+
+DELIMITER ;
+
+-- 调用pro_test6存储过程
+CALL pro_test6(310,@description);
+
+-- 查询总成绩描述
+SELECT @description;
+</code></pre>
+<ul>
+<li>小知识</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">@变量名:  这种变量要在变量名称前面加上“@”符号，叫做用户会话变量，代表整个会话过程他都是有作用的，这个类似于全局变量一样。
+
+@@变量名: 这种在变量前加上 "@@" 符号, 叫做系统变量 
+</code></pre>
+<h5 id="8-5case语句的使用">8.5case语句的使用</h5>
+<ul>
+<li>标准语法1</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+CASE 表达式
+WHEN 值1 THEN 执行sql语句1;
+[WHEN 值2 THEN 执行sql语句2;]
+...
+[ELSE 执行sql语句n;]
+END CASE;
+</code></pre>
+<ul>
+<li>标准语法2</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+CASE
+WHEN 判断条件1 THEN 执行sql语句1;
+[WHEN 判断条件2 THEN 执行sql语句2;]
+...
+[ELSE 执行sql语句n;]
+END CASE;
+</code></pre>
+<ul>
+<li>案例演示</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">/*
+	输入总成绩变量，代表学生总成绩
+	定义一个varchar变量，用于存储分数描述
+	根据总成绩判断：
+		380分及以上  学习优秀
+		320 ~ 380    学习不错
+		320以下      学习一般
+*/
+DELIMITER $
+
+CREATE PROCEDURE pro_test7(IN total INT)
+BEGIN
+	-- 定义变量
+	DECLARE description VARCHAR(10);
+	-- 使用case判断
+	CASE
+	WHEN total >= 380 THEN
+		SET description = '学习优秀';
+	WHEN total >= 320 AND total < 380 THEN
+		SET description = '学习不错';
+	ELSE 
+		SET description = '学习一般';
+	END CASE;
+	
+	-- 查询分数描述信息
+	SELECT description;
+END$
+
+DELIMITER ;
+
+-- 调用pro_test7存储过程
+CALL pro_test7(390);
+CALL pro_test7((SELECT SUM(score) FROM student));
+</code></pre>
+<h5 id="8-6while循环">8.6while循环</h5>
+<ul>
+<li>标准语法</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">-- 标准语法
+初始化语句;
+WHILE 条件判断语句 DO
+	循环体语句;
+	条件控制语句;
+END WHILE;
+</code></pre>
+<ul>
+<li>案例演示</li>
+</ul>
+<pre class=" language-language-mysql"><code class="language-language-mysql">/*
+	计算1~100之间的偶数和
+*/
+DELIMITER $
+
+CREATE PROCEDURE pro_test8()
+BEGIN
+	-- 定义求和变量
+	DECLARE result INT DEFAULT 0;
+	-- 定义初始化变量
+	DECLARE num INT DEFAULT 1;
+	-- while循环
+	WHILE num <= 100 DO
+		-- 偶数判断
+		IF num%2=0 THEN
+			SET result = result + num; -- 累加
+		END IF;
+		
+		-- 让num+1
+		SET num = num + 1;         
+	END WHILE;
+	
+	-- 查询求和结果
+	SELECT result;
+END$
+
+DELIMITER ;
+
+-- 调用pro_test8存储过程
+CALL pro_test8();
+</code></pre>
+<h4 id="9-存储过程的总结">9.存储过程的总结</h4>
+<ul>
+<li>存储过程是 事先经过编译并存储在数据库中的一段 SQL 语句的集合。可以在数据库层面做一些业务处理</li>
+<li>说白了存储过程其实就是将sql语句封装为方法，然后可以调用方法执行sql语句而已</li>
+<li>存储过程的好处
+<ul>
+<li>安全</li>
+<li>高效</li>
+<li>复用性强</li>
+</ul>
+</li>
+</ul>
 
                 
             </div>
